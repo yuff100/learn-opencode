@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/public/images/github-banner.png" alt="OpenCode 中文实战课" width="100%">
+  <img src="https://raw.githubusercontent.com/vbgate/learn-opencode/main/docs/public/images/github-banner.png" alt="OpenCode 中文实战课" width="100%">
 
   <br><br>
   
