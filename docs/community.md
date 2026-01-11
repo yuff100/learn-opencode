@@ -16,6 +16,14 @@ description: 加入 OpenCode 中文学习群，与 500+ 同路人一起交流 AI
     <img src="/images/wechat-qrcode.png" alt="微信二维码" class="qrcode-image" />
     <p class="qrcode-hint">微信扫码添加，备注「OpenCode」拉你入群</p>
   </div>
+  <div class="qrcode-card">
+    <img src="/images/wechat-group-qrcode.jpg" alt="微信群二维码" class="qrcode-image" />
+    <p class="qrcode-hint">扫码入群</p>
+  </div>
+  <div class="qrcode-card">
+    <img src="/images/qq-group-qrcode.jpg" alt="QQ群二维码" class="qrcode-image" />
+    <p class="qrcode-hint">加入 QQ 群</p>
+  </div>
 </div>
 
 ## 群里有什么
@@ -70,7 +78,9 @@ description: 加入 OpenCode 中文学习群，与 500+ 同路人一起交流 AI
 .qrcode-section {
   display: flex;
   justify-content: center;
+  gap: 2rem;
   padding: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .qrcode-card {
