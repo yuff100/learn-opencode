@@ -16,6 +16,7 @@ import HeroCarousel from './components/HeroCarousel.vue'
 import AdSupport from './components/AdSupport.vue'
 import AdSlot from './components/AdSlot.vue'
 import AdInArticle from './components/AdInArticle.vue'
+import AiChat from './components/AiChat.vue'
 
 export default {
   extends: DefaultTheme,
@@ -24,7 +25,8 @@ export default {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
       'not-found': () => h(NotFound),
       'home-hero-image': () => h(HeroCarousel),
-      'doc-after': () => h(AdSlot)
+      'doc-after': () => h(AdSlot),
+      'layout-bottom': () => h(AiChat)
     })
   },
   setup() {

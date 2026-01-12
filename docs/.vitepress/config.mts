@@ -17,7 +17,6 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#10b981' }],
     ['meta', { name: 'author', content: 'OpenCode 中文社区' }],
     ['meta', { name: 'keywords', content: 'OpenCode,AI编程,AI编程助手,OpenCode教程,AI写代码,智谱,DeepSeek,Claude' }],
-    ['link', { rel: 'canonical', href: 'https://learnopencode.com/' }],
 
     // Open Graph
     ['meta', { property: 'og:type', content: 'website' }],
@@ -25,7 +24,6 @@ export default defineConfig({
     ['meta', { property: 'og:site_name', content: 'OpenCode 中文教程' }],
     ['meta', { property: 'og:title', content: 'OpenCode 中文教程 - AI 编程助手实战指南' }],
     ['meta', { property: 'og:description', content: 'OpenCode 是终端 AI 编程助手，本教程从零基础到进阶，教你用 AI 写代码、改 Bug、自动化办公。支持智谱、DeepSeek 等国产模型，完全免费开源。' }],
-    ['meta', { property: 'og:url', content: 'https://learnopencode.com' }],
     ['meta', { property: 'og:image', content: 'https://learnopencode.com/og-image.png' }],
     ['meta', { property: 'og:image:width', content: '1200' }],
     ['meta', { property: 'og:image:height', content: '630' }],
@@ -61,7 +59,28 @@ export default defineConfig({
       src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1238777311285568',
       crossorigin: 'anonymous'
     }],
+
+    // Google Analytics
+    ['script', { async: 'true', src: 'https://www.googletagmanager.com/gtag/js?id=G-1R6TQGK2HZ' }],
+    ['script', {}, `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1R6TQGK2HZ');
+    `],
   ],
+
+  transformHead({ pageData }) {
+    const canonicalUrl = `https://learnopencode.com/${pageData.relativePath}`
+      .replace(/index\.md$/, '')
+      .replace(/\.md$/, '.html')
+
+    return [
+      ['link', { rel: 'canonical', href: canonicalUrl }],
+      ['meta', { property: 'og:url', content: canonicalUrl }],
+    ]
+  },
 
   markdown: {
     config(md) {
