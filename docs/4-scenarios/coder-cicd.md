@@ -39,6 +39,7 @@ prerequisite:
 ---
 
 ## 核心思路（最佳实践）
+<AdInArticle />
 
 - **优先用 GitHub Agent**：不自己在 workflow 里手写“安装 CLI + 跑脚本 + 发评论”的胶水代码。
 - **触发方式统一**：在评论里写 `/oc` 或 `/opencode`，让 Actions runner 执行。

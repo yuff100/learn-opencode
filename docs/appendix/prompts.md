@@ -58,6 +58,8 @@ description: 开箱即用的 Prompt 模板，一键复制直接使用
 
 ### 5. 故事亮点（3-5 个卖点）
 
+<AdInArticle />
+
 ## 示例
 
 ### 输入

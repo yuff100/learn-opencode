@@ -54,6 +54,8 @@ prerequisite:
 
 ## 界面配置
 
+<AdInArticle />
+
 ### TUI 配置
 
 ```json

@@ -100,6 +100,8 @@ prerequisite:
 
 ## 跟我做
 
+<AdInArticle />
+
 ### 第 1 步：设计金手指
 
 **为什么**  

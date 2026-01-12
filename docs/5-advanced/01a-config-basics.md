@@ -100,6 +100,7 @@ prerequisite:
 ---
 
 ## 模型配置
+<AdInArticle />
 
 ### 主模型和小模型
 

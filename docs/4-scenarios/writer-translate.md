@@ -95,6 +95,8 @@ prerequisite:
 
 ## 跟我做
 
+<AdInArticle />
+
 ### 第 1 步：准备术语表
 
 **为什么**  

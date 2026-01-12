@@ -102,6 +102,8 @@ function foo() {
 
 ## Prompt 工程
 
+<AdInArticle />
+
 ### 系统提示词结构
 
 一个好的 Agent prompt 应该包含：

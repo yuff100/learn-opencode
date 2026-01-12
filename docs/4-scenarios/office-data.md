@@ -97,6 +97,7 @@ prerequisite:
 ---
 
 ## 跟我做
+<AdInArticle />
 
 ### 第 1 步：理解数据结构
 

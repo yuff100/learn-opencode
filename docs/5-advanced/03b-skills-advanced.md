@@ -61,6 +61,8 @@ prerequisite:
 
 ### 三层结构详解
 
+<AdInArticle />
+
 ```
 skill/
 └── sql-analysis/

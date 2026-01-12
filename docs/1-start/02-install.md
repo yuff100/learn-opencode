@@ -46,6 +46,7 @@ prerequisite:
 ---
 
 ## 跟我做
+<AdInArticle />
 
 ### macOS / Linux 用户
 

@@ -36,6 +36,8 @@ description: OpenCode 社区插件、项目和资源
 
 ## 插件
 
+<AdInArticle />
+
 | 插件 | 说明 |
 |------|------|
 | [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) | 自动注入 Helicone 会话头，用于请求分组 |

@@ -78,6 +78,7 @@ OpenCode 默认安装方式（`curl | bash` 或 `brew install`）已经配置好
 ---
 
 ### 第 1 步：手动更新（可选）
+<AdInArticle />
 
 **什么时候需要手动更新？**
 

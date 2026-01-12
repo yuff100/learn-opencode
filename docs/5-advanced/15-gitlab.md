@@ -47,6 +47,8 @@ OpenCode 通过 GitLab CI/CD 流水线或 GitLab Duo 集成到 GitLab 工作流�
 
 ## GitLab CI
 
+<AdInArticle />
+
 OpenCode 在常规 GitLab 流水线中工作。可以作为 [CI 组件](https://docs.gitlab.com/ee/ci/components/) 构建到流水线中。
 
 这里使用社区创建的 CI/CD 组件：[nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode)。

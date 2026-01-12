@@ -51,6 +51,7 @@ scoop update opencode
 ---
 
 ## UX 变更
+<AdInArticle />
 
 1. **会话历史更紧凑** - 只显示 edit 和 bash 工具的完整详情
 

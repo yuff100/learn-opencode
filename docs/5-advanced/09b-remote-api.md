@@ -52,6 +52,8 @@ http://<hostname>:<port>/doc
 
 ## 全局 API
 
+<AdInArticle />
+
 ### /global
 
 | 方法 | 路径 | 描述 | 响应 |

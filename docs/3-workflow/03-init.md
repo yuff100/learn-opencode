@@ -65,6 +65,7 @@ prerequisite:
 ---
 
 ## 核心思路
+<AdInArticle />
 
 ### 为什么需要初始化
 

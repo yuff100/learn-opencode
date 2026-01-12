@@ -120,6 +120,8 @@ Context 百分比 = (input + output + reasoning + cache.read + cache.write) / mo
 
 ### 压缩流程详解
 
+<AdInArticle />
+
 #### 第 1 步：Prune 工具输出
 ```typescript
 // 保留最近 40K tokens 的工具输出

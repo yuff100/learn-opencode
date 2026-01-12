@@ -163,6 +163,8 @@ export default {
 
 ### 上下文
 
+<AdInArticle />
+
 工具可以接收当前会话的上下文信息：
 
 ```ts

@@ -143,6 +143,7 @@ opencode
 ---
 
 ## 模型配置问题
+<AdInArticle />
 
 ### Q: API Key 设置了但提示"认证失败"
 

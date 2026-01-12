@@ -125,6 +125,8 @@ opencode mcp debug my-oauth-server
 
 ## 工具权限管理
 
+<AdInArticle />
+
 MCP 工具注册时使用 `{服务器名}_{工具名}` 格式命名。
 
 ### 全局禁用

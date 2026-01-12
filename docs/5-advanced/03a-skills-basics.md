@@ -177,6 +177,8 @@ const OPENCODE_SKILL_GLOB = new Bun.Glob("{skill,skills}/**/SKILL.md")
 
 ## SKILL.md 格式
 
+<AdInArticle />
+
 ### 必需的 Frontmatter
 
 ```yaml

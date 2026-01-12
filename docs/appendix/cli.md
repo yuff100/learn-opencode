@@ -198,6 +198,8 @@ opencode attach http://10.20.30.40:4096
 
 ## 管理命令
 
+<AdInArticle />
+
 ### opencode auth
 
 管理认证和 API Key。凭证存储在 `~/.local/share/opencode/auth.json`。

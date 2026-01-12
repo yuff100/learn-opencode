@@ -46,6 +46,8 @@ OpenCode 与语言服务器协议（LSP）集成，帮助 LLM 与你的代码库
 
 ## 内置 LSP 服务器
 
+<AdInArticle />
+
 OpenCode 内置了多种流行语言的 LSP 服务器：
 
 | LSP 服务器 | 扩展名 | 要求 |

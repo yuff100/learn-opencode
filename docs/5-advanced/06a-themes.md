@@ -134,6 +134,8 @@ OpenCode 内置 **32** 个主题：
 
 ## 配置默认主题
 
+<AdInArticle />
+
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",

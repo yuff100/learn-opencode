@@ -85,6 +85,8 @@ prerequisite:
 
 ## 跟我做
 
+<AdInArticle />
+
 ### 第 1 步：识别代码坏味道
 
 **为什么**

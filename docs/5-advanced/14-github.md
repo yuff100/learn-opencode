@@ -47,6 +47,8 @@ opencode github install
 
 ### 手动设置
 
+<AdInArticle />
+
 也可以手动设置：
 
 **1. 安装 GitHub App**

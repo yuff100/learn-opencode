@@ -29,6 +29,8 @@ OpenCode Zen 是一个 AI 网关，让你可以访问这些模型。
 
 ## 使用方法
 
+<AdInArticle />
+
 OpenCode Zen 像其他提供商一样工作：
 
 1. 登录 [OpenCode Zen 控制台](https://console.opencode.ai)，添加付款信息，复制 API 密钥

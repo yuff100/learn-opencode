@@ -83,6 +83,8 @@ Analyze code without making any modifications.
 
 ## 内置工具列表
 
+<AdInArticle />
+
 ### bash
 
 在项目环境中执行 shell 命令。

@@ -114,6 +114,8 @@ prerequisite:
 
 ## 跟我做
 
+<AdInArticle />
+
 ### 第 1 步：写故事梗概
 
 **为什么**  

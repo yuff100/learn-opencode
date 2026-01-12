@@ -162,6 +162,8 @@ temperature: 0.8
 
 ### 第 2 步：创建写作 Skill
 
+<AdInArticle />
+
 **为什么**  
 Skill 封装复杂的写作指令，一键调用。
 

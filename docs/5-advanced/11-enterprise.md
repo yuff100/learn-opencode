@@ -68,6 +68,8 @@ prerequisite:
 
 ## 开始试用
 
+<AdInArticle />
+
 OpenCode 是开源的，不存储任何代码或上下文数据，团队可以直接开始试用。
 
 ### 数据处理

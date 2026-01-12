@@ -90,6 +90,8 @@ opencode acp
 
 ### 使用方式
 
+<AdInArticle />
+
 1. 打开命令面板
 2. 执行 `agent: new thread`
 

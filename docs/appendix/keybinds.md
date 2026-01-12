@@ -126,6 +126,8 @@ OpenCode 使用 **Leader 键** 避免与终端快捷键冲突。
 
 ## IDE 扩展快捷键
 
+<AdInArticle />
+
 ### VS Code / Cursor
 
 | 快捷键 (macOS) | 快捷键 (Win/Linux) | 功能 |

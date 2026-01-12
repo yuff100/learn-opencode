@@ -65,6 +65,7 @@ prerequisite:
 ---
 
 ## 快捷键
+<AdInArticle />
 
 | 功能 | macOS | Windows/Linux |
 |------|-------|---------------|

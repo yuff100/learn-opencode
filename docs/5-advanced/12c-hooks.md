@@ -122,6 +122,8 @@ OpenCode 启动时会加载这个插件，会话完成后会弹出通知。
 
 ### 第 2 步：实现敏感文件拦截
 
+<AdInArticle />
+
 **为什么**  
 用 `tool.execute.before` Hook 拦截工具调用，阻止 AI 读取敏感文件。
 

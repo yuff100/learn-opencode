@@ -86,6 +86,7 @@ prerequisite:
 ---
 
 ## 跟我做
+<AdInArticle />
 
 ### 第 1 步：创建写作项目文件夹
 

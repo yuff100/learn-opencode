@@ -90,6 +90,8 @@ description: OpenCode 所有斜杠命令的完整参考
 
 ### /connect - 添加提供商
 
+<AdInArticle />
+
 交互式配置新的模型提供商。
 
 ```

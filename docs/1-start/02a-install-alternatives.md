@@ -76,6 +76,7 @@ paru -S opencode-bin
 ---
 
 ## Windows
+<AdInArticle />
 
 ### Chocolatey
 

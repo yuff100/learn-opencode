@@ -58,6 +58,7 @@ OpenCode 内置了多种流行语言和框架的格式化器：
 如果项目的 `package.json` 中有 `prettier`，OpenCode 会自动使用它。
 
 ## 工作原理
+<AdInArticle />
 
 当 OpenCode 写入或编辑文件时：
 

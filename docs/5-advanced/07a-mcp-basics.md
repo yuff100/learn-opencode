@@ -95,6 +95,8 @@ MCP（Model Context Protocol）是一种标准协议，让 AI 能调用外部工
 
 ### 配置选项
 
+<AdInArticle />
+
 | 选项 | 类型 | 必填 | 描述 |
 |------|------|------|------|
 | `type` | String | ✓ | 必须是 `"local"` |

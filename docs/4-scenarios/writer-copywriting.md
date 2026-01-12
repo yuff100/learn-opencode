@@ -132,6 +132,8 @@ prerequisite:
 
 ### 第 3 步：写 AIDA 结构文案
 
+<AdInArticle />
+
 **为什么**  
 结构化文案更有说服力。
 

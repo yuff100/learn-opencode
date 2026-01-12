@@ -114,6 +114,7 @@ Plan Agent 使用**权限询问**机制保护你的代码：
 ---
 
 ## 可用工具
+<AdInArticle />
 
 Plan Agent 可以使用只读工具，Build Agent 可以使用所有工具：
 

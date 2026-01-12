@@ -79,6 +79,8 @@ Scoop 会自动配置 PATH，如果没生效，重启 PowerShell。
 
 ## 问题 2：网络错误 / 下载超时
 
+<AdInArticle />
+
 **症状：**
 
 ```

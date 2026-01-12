@@ -66,6 +66,8 @@ prerequisite:
 
 ## 核心思路
 
+<AdInArticle />
+
 ### TUI 界面导览
 
 启动 OpenCode 后，你会看到这样的界面：

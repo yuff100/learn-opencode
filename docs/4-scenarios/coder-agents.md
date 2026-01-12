@@ -149,6 +149,7 @@ tools:
 - `opencode/packages/web/src/content/docs/agents.mdx:169`
 
 ### 第 2 步：创建 Security Auditor Agent
+<AdInArticle />
 
 **为什么**  
 安全审计需要专门的视角。

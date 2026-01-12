@@ -131,6 +131,8 @@ prerequisite:
 
 ### 第 3 步：生成 PR 描述
 
+<AdInArticle />
+
 **为什么**  
 清晰的 PR 描述帮助 reviewer 理解。
 

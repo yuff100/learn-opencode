@@ -91,6 +91,8 @@ OpenCode 有两类 Agent：
 
 ## 内置 Agent 详解
 
+<AdInArticle />
+
 ### 用户可见的 Agent
 
 | 名称 | 模式 | 默认权限 | 说明 |

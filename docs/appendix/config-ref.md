@@ -191,6 +191,8 @@ OpenCode 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式：
 
 ### tui
 
+<AdInArticle />
+
 TUI 界面配置。
 
 ```json

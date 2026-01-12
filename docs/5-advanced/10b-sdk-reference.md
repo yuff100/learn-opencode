@@ -61,6 +61,8 @@ SDK 客户端通过 `OpencodeClient` 类暴露以下模块：
 
 ---
 
+<AdInArticle />
+
 ## Session 会话管理
 
 会话是 SDK 最核心的模块，提供消息发送、历史管理等功能。

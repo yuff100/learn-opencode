@@ -15,6 +15,7 @@ import NotFound from './components/NotFound.vue'
 import HeroCarousel from './components/HeroCarousel.vue'
 import AdSupport from './components/AdSupport.vue'
 import AdSlot from './components/AdSlot.vue'
+import AdInArticle from './components/AdInArticle.vue'
 
 export default {
   extends: DefaultTheme,
@@ -54,5 +55,6 @@ export default {
     app.component('AsciinemaPlayer', AsciinemaPlayer)
     app.component('VideoEmbed', VideoEmbed)
     app.component('AdSupport', AdSupport)
+    app.component('AdInArticle', AdInArticle)
   }
 } satisfies Theme

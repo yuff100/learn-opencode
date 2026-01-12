@@ -67,6 +67,8 @@ prerequisite:
 
 ### 从 npm 加载
 
+<AdInArticle />
+
 在配置文件中指定 npm 包：
 
 ```jsonc

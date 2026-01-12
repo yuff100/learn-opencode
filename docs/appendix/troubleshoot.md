@@ -135,6 +135,7 @@ rm -rf ~/.local/share/opencode
 ---
 
 ## 认证问题
+<AdInArticle />
 
 ### API Key 无效
 

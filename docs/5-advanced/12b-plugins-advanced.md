@@ -50,6 +50,8 @@ OpenCode 插件有两类钩子：
 
 ### 事件钩子
 
+<AdInArticle />
+
 使用 `event` 统一订阅所有事件：
 
 ```ts

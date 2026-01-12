@@ -160,6 +160,8 @@ Agent 级别 permission
 
 ## bash 权限详解
 
+<AdInArticle />
+
 bash 权限匹配的是**解析后的命令字符串**。
 
 ### 常见配置
