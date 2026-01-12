@@ -20,6 +20,16 @@ prerequisite:
 
 # Hook 教程
 
+## 📝 课程笔记
+
+本课核心知识点整理：
+
+<img src="/images/5-advanced/hooks-notes.mini.jpeg" 
+     alt="Hook 教程学霸笔记" 
+     data-zoom-src="/images/5-advanced/hooks-notes.jpeg" />
+
+---
+
 > 💡 **一句话总结**：Hook 是 OpenCode 的"扩展接口"，你可以在事件发生时执行逻辑，或在关键流程中拦截并修改数据。
 
 ---
