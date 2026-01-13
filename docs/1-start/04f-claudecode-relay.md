@@ -20,6 +20,14 @@ prerequisite:
 
 # 第三方中转（Claude Code 兼容）
 
+## 📝 课程笔记
+
+本课核心知识点整理：
+
+<img src="/images/1-start/claudecode-relay-notes.mini.jpeg"
+     alt="第三方中转（Claude Code 兼容）学霸笔记"
+     data-zoom-src="/images/1-start/claudecode-relay-notes.jpeg" />
+
 这一页只做一件事：把“宣称兼容 Claude Code”的第三方中转，接到 OpenCode 里。
 
 ## 学完你能做什么

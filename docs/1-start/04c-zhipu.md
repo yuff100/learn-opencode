@@ -1,5 +1,5 @@
 ---
-title: 连接智谱（Z.AI / GLM）
+title: 连接 GLM-4.7
 subtitle: 中文强、Coding Plan 可选
 course: OpenCode 中文实战课
 stage: 第一阶段
@@ -17,29 +17,39 @@ prerequisite:
   - 1.2 安装
 ---
 
-# 连接智谱（Z.AI / GLM）
+# 连接 GLM-4.7
+
+## 📝 课程笔记
+
+本课核心知识点整理：
+
+<img src="/images/1-start/zhipu-notes.mini.jpeg" 
+     alt="连接 GLM-4.7 学霸笔记" 
+     data-zoom-src="/images/1-start/zhipu-notes.jpeg" />
+
+---
 
 > 预计时间：5-10 分钟
 
-智谱（Z.AI）在中文理解、写作/总结方面体验很好。
+智谱 AI 在中文理解、写作/总结方面体验很好，**属于国产大模型第一梯队**，国内用户访问速度快、连接稳定。
 
-**特别推荐**：强烈建议订阅官方的 **GLM Coding Pro** 套餐（中间那个选项）。
+GLM Coding Plan 套餐 **20 元/月起步**，相比按量计费更省。
 
-### 为什么推荐 GLM Coding Pro？
+### GLM-4.7 能力亮点
 
-- **视觉理解**：可以读取图片，让 AI 帮你分析截图或设计稿
-- **联网搜索**：支持实时联网，获取最新技术文档和解决方案
-- **OpenCode 自带模型区别**：OpenCode 虽然自带免费的 GLM-4.7，但仅限基础对话。如果你是 GLM Coding Pro 订阅用户，连接后即可解锁上述高级能力。
+- 在推理、代码和智能体能力等方面达到开源模型 SOTA 水平
+- Pro 套餐可用专属 MCP（含图像视频理解、联网搜索、网页读取、开源仓库），助力完成更广泛的开发任务
 
-如果你还没看过“API Key 是什么”，建议先回到 [1.4 总览](./04-connect) 把概念弄清楚。
+
+如果你还没看过"API Key 是什么"，建议先回到 [1.4 总览](./04-connect) 把概念弄清楚。
 
 ---
 
 ## 学完你能做什么
 
-- 获取智谱（Z.AI）API Key
+- 获取智谱 AI API Key
 - 在 OpenCode 里连接智谱提供商
-- 选择一个 GLM 模型并完成第一次对话
+- 选择 GLM-4.7 并完成第一次对话
 
 ---
 
@@ -54,16 +64,13 @@ prerequisite:
 
 ### 第 1 步：注册并获取 API Key
 
-推荐通过以下邀请链接注册/登录，可以直接定位到 GLM Coding Pro 页面：
+推荐通过以下链接注册/登录：
 
-- **专属注册链接（优惠 10%）**：[https://www.bigmodel.cn/glm-coding?ic=PNSI6JU6FP](https://www.bigmodel.cn/glm-coding?ic=PNSI6JU6FP)
+- **教程站专属链接（优惠 10%）**：[https://www.bigmodel.cn/glm-coding?ic=PNSI6JU6FP](https://www.bigmodel.cn/glm-coding?ic=PNSI6JU6FP)
 
-> **注意**：
-> 1. 使用 learnopencode 教程站专属链接购买可享受 **10% 优惠**。
-> 2. 请选择网页上**中间的套餐（GLM Coding Pro）**进行购买。只有这个套餐才包含视觉理解和联网搜索功能，能最大化 OpenCode 的能力。
-> 3. **丰俭由人**：如果是轻度使用，**最低的套餐其实就够用了**。不用非得买贵的，适合自己最重要。
-
-拿到 Key 后先保存好（不要发群、不要提交到 GitHub）。
+> **提示**：
+> - GLM Coding Plan 有 Lite/Pro/Max 三个套餐，根据你的使用需求选择，建议选 Pro（量大管饱）。
+> - 拿到 Key 后先保存好（不要发群、不要提交到 GitHub）。
 
 ---
 
@@ -82,8 +89,8 @@ opencode
 ```
 
 在提供商列表里搜索并选择：
-- `Z.AI`（按量计费）
-- `Z.AI Coding Plan`（如果你订阅了官方 Coding Plan）
+
+- `Zhipu AI Coding Plan`
 
 然后粘贴你的 API Key。
 
@@ -122,7 +129,7 @@ opencode
 
 | 现象 | 原因 | 解决 |
 |-----|------|------|
-| 没有 `Z.AI Coding Plan` 选项 | OpenCode 版本太旧 | 升级 OpenCode：`opencode upgrade` |
+| 没有 `智谱 AI Coding Plan` 选项 | OpenCode 版本太旧 | 升级 OpenCode：`opencode upgrade` |
 | `API key invalid` | Key 格式错误 | 确认是完整的 Key（通常类似 `xxx.xxx`） |
 
 ---
