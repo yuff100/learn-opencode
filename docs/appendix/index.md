@@ -23,6 +23,7 @@ description: OpenCode 快捷键、斜杠命令、CLI 参考、配置选项、模
 | [I. 生态系统](./ecosystem) | 社区插件和项目 | 扩展能力 |
 | [J. 迁移指南](./migration) | 从 0.x 到 1.0 | 版本升级 |
 | [K. OpenCode Zen](./zen) | OpenCode 精选模型服务 | 模型选择 |
+| [L. Vercel Web Analytics](./vercel-analytics) | Vercel 网站分析指南 | 网站数据追踪 |
 
 ---
 
