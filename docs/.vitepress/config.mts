@@ -337,6 +337,7 @@ export default defineConfig({
           { text: 'I. 生态系统', link: '/appendix/ecosystem' },
           { text: 'J. 迁移指南', link: '/appendix/migration' },
           { text: 'K. OpenCode Zen', link: '/appendix/zen' },
+          { text: 'L. Vercel Web Analytics', link: '/appendix/vercel-analytics' },
         ]
       },
       {
