@@ -121,15 +121,6 @@ OpenCode 自带两个内置插件（可通过 `OPENCODE_DISABLE_DEFAULT_PLUGINS=
 | `opencode-copilot-auth` | GitHub Copilot 认证 |
 | `opencode-anthropic-auth` | Anthropic 认证 |
 
-### 内置插件
-
-OpenCode 自带两个内置插件（可通过 `OPENCODE_DISABLE_DEFAULT_PLUGINS=1` 禁用）：
-
-| 插件 | 功能 |
-|------|------|
-| `opencode-copilot-auth` | GitHub Copilot 认证 |
-| `opencode-anthropic-auth` | Anthropic 认证 |
-
 ---
 
 ## 加载顺序

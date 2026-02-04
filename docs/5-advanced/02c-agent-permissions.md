@@ -4,14 +4,15 @@ subtitle: 精确控制 Agent 能做什么
 course: OpenCode 中文实战课
 stage: 第五阶段
 lesson: "5.2c"
-duration: 20 分钟
-practice: 15 分钟
+duration: 25 分钟
+practice: 20 分钟
 level: 进阶
 description: 精确控制 Agent 可以做什么、不可以做什么，确保 AI 操作的安全性。
 tags:
   - Agent
   - 权限
   - 安全
+  - TaskTool
 prerequisite:
   - 5.2a Agent 快速入门
 ---
@@ -327,6 +328,110 @@ task 权限控制 **Agent 可以调用哪些 subagent**。
   }
 }
 ```
+ 
+### TaskTool 参数详解
+
+Task 工具的完整参数定义如下：
+
+| 参数 | 类型 | 必需 | 说明 |
+|------|------|------|
+| `description` | string | 是 | 任务描述（3-5 个词），用作子会话标题 |
+| `prompt` | string | 是 | 子代理要执行的任务提示 |
+| `subagent_type` | string | 是 | 要调用的子代理名称（必须是非 primary agent） |
+| `session_id` | string | 否 | 继续已存在的子会话 |
+| `command` | string | 否 | 触发此任务的命令（用于调试） |
+
+### 执行流程
+
+TaskTool 的工作流程如下：
+
+```
+主 Agent (Build)
+    ↓
+    1. 权限检查
+       - 检查调用者是否有 task 权限
+       - 过滤可访问的 subagent
+       ↓
+    2. 创建子会话
+       - 在主会话下创建独立 session
+       - 标题：描述 + (@subagent subagent)
+       - 应用限制权限（todowrite/todoread/task）
+       ↓
+    3. 调用子代理
+       - 子代理在独立 session 中执行
+       - 上下文仅包含传入的 prompt
+       - 监听 PartUpdated 事件获取进度
+       ↓
+    4. 返回结果
+       - 收集所有工具调用摘要
+       - 生成对话摘要
+       - 返回给主 Agent
+```
+
+> **关键点**：子代理运行在**独立的 Session** 中，看不到主 Agent 的对话历史。调用时必须提供完整上下文。
+
+### 子代理的默认限制
+
+为了防止无限递归，子代理（无论通过 task 调用还是 `@` 手动调用）受到以下**硬编码限制**：
+
+| 限制 | 说明 | 原因 |
+|------|------|------|
+| `todowrite: deny` | 禁止写入待办列表 | 防止子代理干扰主 Agent 任务管理 |
+| `todoread: deny` | 禁止读取待办列表 | 同上 |
+| `task: deny` | 禁止再调用子代理 | 防止无限递归 |
+
+### 实际使用示例
+
+#### 配置允许调用特定子代理
+
+```jsonc
+{
+  "agent": {
+    "orchestrator": {
+      "description": "任务编排 Agent，可调用专门子代理",
+      "mode": "primary",
+      "permission": {
+        "task": {
+          "docs-writer": "allow",      // 允许文档写作
+          "code-reviewer": "allow",    // 允许代码审查
+          "general": "allow",           // 允许通用任务
+          "*": "deny"                 // 其他禁止
+        }
+      }
+    }
+  }
+}
+```
+
+#### Agent 内部调用 TaskTool
+
+```markdown
+# 伪代码示例
+主 Agent 收到：帮我写 API 文档
+
+1. 分析任务类型 → 确定需要 docs-writer 子代理
+2. 调用 TaskTool：
+   - description: "编写 API 文档"
+   - prompt: "为以下函数编写文档..."
+   - subagent_type: "docs-writer"
+3. 子代理执行 → 返回文档内容
+4. 主 Agent 接收结果 → 继续对话
+```
+
+#### 继续子会话
+
+当子代理需要分步执行时，可以传递 `session_id` 继续之前的工作：
+
+```
+TaskTool(
+  description: "完善文档",
+  prompt: "检查文档完整性并补充缺失内容",
+  subagent_type: "docs-writer",
+  session_id: "abc123"  // 继续之前的会话
+)
+```
+
+> **来源**：`packages/opencode/src/tool/task.ts:23-193`
 
 ---
 
@@ -589,8 +694,10 @@ permission:
 1. **权限系统架构**：三种动作、配置层级、最后匹配获胜
 2. **12+ 权限类型**：bash、edit、task、skill 等
 3. **细粒度控制**：使用对象语法和通配符
-4. **内置安全规则**：.env 保护、doom_loop、external_directory
-5. **安全最佳实践**：最小权限、显式允许、敏感操作 ask
+4. **TaskTool 机制**：子代理调用、参数定义、执行流程
+5. **子代理限制**：todowrite/todoread/task 禁用，防止无限递归
+6. **内置安全规则**：.env 保护、doom_loop、external_directory
+7. **安全最佳实践**：最小权限、显式允许、敏感操作 ask
 
 ---
 

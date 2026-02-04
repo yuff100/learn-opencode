@@ -1,6 +1,6 @@
 <template>
-  <div class="ad-in-article">
-    <ins class="adsbygoogle"
+  <div v-if="isEnabled" class="ad-in-article">
+    <ins ref="adRef" class="adsbygoogle"
          style="display:block; text-align:center;"
          data-ad-layout="in-article"
          data-ad-format="fluid"
@@ -10,16 +10,51 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 
-onMounted(() => {
-  if (typeof window !== 'undefined') {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({})
-    } catch (e) {
-      console.error('AdSense error:', e)
-    }
+const isEnabled = ref(false)
+const adRef = ref(null)
+const allowedHosts = new Set(['learnopencode.com', 'www.learnopencode.com'])
+
+const isAllowedHost = () => {
+  if (typeof window === 'undefined') {
+    return false
   }
+
+  return allowedHosts.has(window.location.hostname)
+}
+
+const initAd = () => {
+  const adElement = adRef.value
+
+  if (!adElement) {
+    return
+  }
+
+  if (adElement.getAttribute('data-adsbygoogle-status') || adElement.getAttribute('data-ad-status')) {
+    return
+  }
+
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
+  } catch (error) {
+    isEnabled.value = false
+    console.error('AdSense init failed', {
+      slot: '9628105168',
+      host: window.location.hostname,
+      error
+    })
+  }
+}
+
+onMounted(async () => {
+  if (!isAllowedHost()) {
+    return
+  }
+
+  isEnabled.value = true
+  await nextTick()
+  initAd()
 })
 </script>
 

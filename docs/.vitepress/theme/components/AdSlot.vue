@@ -1,9 +1,7 @@
 <template>
-  <div class="ad-container">
-    <div class="ad-support-notice">
-      本站教程完全免费，广告收入用于覆盖服务器成本。感谢您的支持！
-    </div>
-    <ins class="adsbygoogle"
+  <div v-if="isEnabled" class="ad-container">
+
+    <ins ref="adRef" class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-1238777311285568"
          data-ad-slot="8138079461"
@@ -13,17 +11,52 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 
-onMounted(() => {
-  // 确保 adsbygoogle 已加载
-  if (typeof window !== 'undefined') {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({})
-    } catch (e) {
-      console.error('AdSense error:', e)
-    }
+const isEnabled = ref(false)
+const adRef = ref(null)
+const allowedHosts = new Set(['learnopencode.com', 'www.learnopencode.com'])
+
+const isAllowedHost = () => {
+  if (typeof window === 'undefined') {
+    return false
   }
+
+  return allowedHosts.has(window.location.hostname)
+}
+
+const initAd = () => {
+  const adElement = adRef.value
+
+  if (!adElement) {
+    return
+  }
+
+  if (adElement.getAttribute('data-adsbygoogle-status') || adElement.getAttribute('data-ad-status')) {
+    return
+  }
+
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
+  } catch (error) {
+    isEnabled.value = false
+    console.error('AdSense init failed', {
+      slot: '8138079461',
+      host: window.location.hostname,
+      error
+    })
+  }
+}
+
+onMounted(async () => {
+  if (!isAllowedHost()) {
+    return
+  }
+
+  isEnabled.value = true
+
+  await nextTick()
+  initAd()
 })
 </script>
 
@@ -34,10 +67,5 @@ onMounted(() => {
   border-top: 1px solid var(--vp-c-divider);
 }
 
-.ad-support-notice {
-  font-size: 0.85rem;
-  color: var(--vp-c-text-3);
-  text-align: center;
-  margin-bottom: 1rem;
-}
+
 </style>

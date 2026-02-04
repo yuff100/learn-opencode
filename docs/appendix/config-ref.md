@@ -1,11 +1,11 @@
 ---
-title: 配置选项参考
-description: opencode.json 所有配置项的完整说明
+title: opencode.json 配置详解
+description: opencode.json 配置文件的详细参考手册，涵盖所有可用字段
 ---
 
-# 配置选项参考
+# opencode.json 配置详解
 
-> `opencode.json` 所有配置项的完整说明
+> 本文档是 OpenCode 配置文件的完整参考手册，详细解释 `opencode.json` 中可用的每一个字段。
 
 ## 📝 课程笔记
 
@@ -17,129 +17,111 @@ description: opencode.json 所有配置项的完整说明
 
 ---
 
-## 配置文件位置
+## 配置文件位置与优先级
 
-| 类型 | 路径 | 说明 |
-|------|------|------|
-| 项目级 | `./opencode.json` | 项目根目录或 Git 目录 |
-| 全局级 | `~/.config/opencode/opencode.json` | 用户全局配置 |
-| 环境变量 | `OPENCODE_CONFIG` 指定的路径 | 自定义路径 |
-| 自定义目录 | `OPENCODE_CONFIG_DIR` 指定的目录 | 自定义配置目录 |
+OpenCode 按以下顺序加载配置（优先级从低到高，后者覆盖前者）：
 
-配置合并规则：自定义路径 > 项目级 > 全局级（后者覆盖前者的冲突键）
+1. **远程/默认配置**：从 `.well-known/opencode` 加载（如果配置了远程 Auth）
+2. **全局配置**：`~/.config/opencode/opencode.json`
+3. **自定义全局路径**：`OPENCODE_CONFIG` 环境变量指定的路径
+4. **项目配置**：项目根目录下的 `opencode.json` 或 `opencode.jsonc`
+5. **内联配置**：`OPENCODE_CONFIG_CONTENT` 环境变量的内容
 
 ---
 
-## 配置格式
+## 顶层配置 (Top Level)
 
-OpenCode 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式：
+配置文件的根对象中包含的字段。
 
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  // 主题配置
-  "theme": "opencode",
-  "model": "anthropic/claude-sonnet-4-5",
-  "autoupdate": true
+### 基础设置
+
+| 字段 | 类型 | 说明 | 默认值 |
+|------|------|------|--------|
+| `username` | string | 在对话中显示的用户名。如果不设置，使用系统用户名。 | 系统用户 |
+| `theme` | string | 界面主题名称。详见 [主题列表](../5-advanced/06a-themes)。 | - |
+| `autoupdate` | boolean \| "notify" | 自动更新行为。`true`=自动更新，`false`=禁用，`"notify"`=仅通知。 | - |
+| `logLevel` | enum | 日志级别。可选值：`"DEBUG"`, `"INFO"`, `"WARN"`, `"ERROR"`。 | `"INFO"` |
+| `snapshot` | boolean | 是否启用 Git 快照备份机制。设为 `false` 禁用。 | `true` |
+
+### 模型与 Agent
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `model` | string | 主模型 ID (格式: `provider/model`)，用于复杂任务。 |
+| `small_model` | string | 小模型 ID，用于生成标题、摘要等简单任务。 |
+| `default_agent` | string | 默认启动的 Primary Agent 名称。默认为 `build`。 |
+
+### 行为控制
+
+| 字段 | 类型 | 说明 | 默认值 |
+|------|------|------|--------|
+| `share` | enum | 会话分享行为。`"manual"`(手动), `"auto"`(自动), `"disabled"`(禁用)。 | `"manual"` |
+| `disabled_providers` | string[] | 禁用的 Provider 列表。即使有 Key 也不会加载。 | `[]` |
+| `enabled_providers` | string[] | 仅启用的 Provider 列表。设置后，不在列表中的都会被忽略。 | - |
+
+---
+
+## 界面配置 (tui)
+
+控制终端界面 (TUI) 的显示行为。
+
+```json
+"tui": {
+  "scroll_speed": 3,
+  "diff_style": "auto"
 }
 ```
 
+| 字段 | 类型 | 说明 | 默认值 |
+|------|------|------|--------|
+| `scroll_speed` | number | 鼠标滚轮滚动速度倍率（最小 0.001）。 | 3 |
+| `scroll_acceleration` | object | 滚动加速配置。 | - |
+| `scroll_acceleration.enabled` | boolean | 是否启用 macOS 风格的惯性滚动加速。 | `false` |
+| `diff_style` | enum | 差异对比显示样式。`"auto"`(自适应), `"stacked"`(始终单列)。 | `"auto"` |
+
 ---
 
-## 完整配置示例
+## Provider 配置 (provider)
+
+配置模型提供商的 API Key、端点和模型参数。
+
+**键名**：`provider` (单数)  
+**类型**：`Record<string, ProviderConfig>`
 
 ```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  
-  "model": "anthropic/claude-sonnet-4-5",
-  "small_model": "anthropic/claude-haiku-4-5",
-  "default_agent": "build",
-  "theme": "tokyonight",
-  "autoupdate": true,
-  "share": "manual",
-  
-  "provider": {
-    "anthropic": {
-      "options": {
-        "timeout": 600000
-      }
+"provider": {
+  "anthropic": {
+    "options": {
+      "apiKey": "sk-...",
+      "timeout": 600000
     }
-  },
-  
-  "permission": {
-    "edit": "ask",
-    "bash": "ask"
-  },
-  
-  "server": {
-    "port": 4096,
-    "hostname": "127.0.0.1"
   }
 }
 ```
 
----
+### 通用选项 (options)
 
-## 配置项详解
+所有 Provider 都支持的 `options` 字段：
 
-### 模型配置
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `apiKey` | string | API 密钥。建议使用 `{env:VAR}` 引用环境变量。 |
+| `baseURL` | string | 自定义 API 端点地址（用于代理或兼容服务）。 |
+| `timeout` | number \| false | 请求超时时间（毫秒）。默认 300000 (5分钟)。`false` 禁用超时。 |
+| `setCacheKey` | boolean | 是否启用 Prompt Cache 键（用于 Anthropic/DeepSeek 等）。默认 `false`。 |
+| `enterpriseUrl` | string | GitHub Enterprise URL (仅 Copilot Provider)。 |
 
-#### model
+### 模型特定配置 (models)
 
-主模型，用于复杂任务。格式为 `provider/model`。
-
-```json
-{
-  "model": "anthropic/claude-sonnet-4-5"
-}
-```
-
-#### small_model
-
-小模型，用于快速任务（如标题生成）。默认自动选择便宜模型。
+针对特定模型进行微调：
 
 ```json
-{
-  "small_model": "anthropic/claude-haiku-4-5"
-}
-```
-
-#### default_agent
-
-默认代理。必须是 primary 代理（非 subagent）。
-
-```json
-{
-  "default_agent": "build"
-}
-```
-
-可选值：`build`、`plan` 或自定义代理名称。
-
----
-
-### provider
-
-模型提供商配置。**注意是单数形式**。
-
-```json
-{
-  "provider": {
-    "anthropic": {
-      "options": {
-        "apiKey": "{env:ANTHROPIC_API_KEY}",
-        "timeout": 600000,
-        "setCacheKey": true
-      },
-      "models": {
-        "claude-sonnet-4-5": {
-          "options": {
-            "thinking": {
-              "type": "enabled",
-              "budgetTokens": 16000
-            }
-          }
+"provider": {
+  "anthropic": {
+    "models": {
+      "claude-3-7-sonnet": {
+        "variants": {
+          "thinking": { "disabled": true } // 禁用特定变体
         }
       }
     }
@@ -147,494 +129,276 @@ OpenCode 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式：
 }
 ```
 
-#### 提供商选项
+### 黑白名单
+
+在 Provider 配置对象内也可以控制模型列表：
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `options.apiKey` | string | API 密钥 |
-| `options.baseURL` | string | 自定义 API 端点 |
-| `options.timeout` | number/false | 请求超时（毫秒），默认 300000 |
-| `options.setCacheKey` | boolean | 确保设置缓存键 |
-| `models` | object | 模型特定配置 |
+| `whitelist` | string[] | 仅允许使用的模型列表。 |
+| `blacklist` | string[] | 禁止使用的模型列表。 |
 
-#### Amazon Bedrock 特殊配置
+---
+
+## Agent 配置 (agent)
+
+定义或覆盖 Agent 的行为。
+
+**键名**：`agent` (单数)  
+**类型**：`Record<string, AgentConfig>`
 
 ```json
-{
-  "provider": {
-    "amazon-bedrock": {
-      "options": {
-        "region": "us-east-1",
-        "profile": "my-aws-profile",
-        "endpoint": "https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com"
-      }
-    }
+"agent": {
+  "code-reviewer": {
+    "mode": "subagent",
+    "prompt": "You are a code reviewer...",
+    "permission": { "edit": "deny" }
   }
 }
 ```
-
----
-
-### theme
-
-主题配置。**注意是顶层配置，不是 `tui.theme`**。
-
-```json
-{
-  "theme": "tokyonight"
-}
-```
-
-可用主题请参考 [主题配置](../5-advanced/06a-themes)。
-
----
-
-### tui
-
-<AdInArticle />
-
-TUI 界面配置。
-
-```json
-{
-  "tui": {
-    "scroll_speed": 3,
-    "scroll_acceleration": {
-      "enabled": true
-    },
-    "diff_style": "auto"
-  }
-}
-```
-
-| 字段 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `scroll_speed` | number | 1 | 滚动速度（启用加速时忽略） |
-| `scroll_acceleration.enabled` | boolean | - | 启用 macOS 风格滚动加速 |
-| `diff_style` | string | `auto` | Diff 渲染样式：`auto`/`stacked` |
-
----
-
-### server
-
-服务器模式配置。
-
-```json
-{
-  "server": {
-    "port": 4096,
-    "hostname": "127.0.0.1",
-    "mdns": true,
-    "cors": ["http://localhost:5173"]
-  }
-}
-```
-
-| 字段 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `port` | number | `4096` | 监听端口 |
-| `hostname` | string | `127.0.0.1` | 监听地址 |
-| `mdns` | boolean | `false` | 启用 mDNS 发现 |
-| `cors` | string[] | `[]` | 允许的 CORS 源 |
-
----
-
-### permission
-
-权限控制配置。**注意是单数形式**。
-
-```json
-{
-  "permission": {
-    "edit": "ask",
-    "bash": "ask",
-    "write": "allow",
-    "read": "allow"
-  }
-}
-```
-
-| 值 | 说明 |
-|----|------|
-| `allow` | 自动允许 |
-| `ask` | 每次询问 |
-| `deny` | 拒绝 |
-
-可配置的工具：`bash`、`read`、`write`、`edit`、`glob`、`grep`、`webfetch`、`skill` 等。
-
-详见 [权限配置](../5-advanced/05-permissions.md)。
-
----
-
-### tools
-
-工具启用/禁用配置。
-
-```json
-{
-  "tools": {
-    "write": false,
-    "bash": false,
-    "mymcp_*": false
-  }
-}
-```
-
-支持通配符匹配 MCP 工具。
-
----
-
-### agent
-
-Agent 配置。**注意是单数形式**。
-
-```json
-{
-  "agent": {
-    "code-reviewer": {
-      "description": "Reviews code for best practices",
-      "model": "anthropic/claude-sonnet-4-5",
-      "prompt": "You are a code reviewer.",
-      "tools": {
-        "write": false,
-        "edit": false
-      }
-    }
-  }
-}
-```
-
-详见 [自定义 Agent](../5-advanced/02a-agent-quickstart)。
-
----
-
-### command
-
-自定义命令配置。**注意是单数形式**。
-
-```json
-{
-  "command": {
-    "test": {
-      "template": "Run the full test suite with coverage.",
-      "description": "Run tests with coverage",
-      "agent": "build",
-      "model": "anthropic/claude-haiku-4-5"
-    }
-  }
-}
-```
-
-详见 [自定义命令](../5-advanced/04-commands.md)。
-
----
-
-### share
-
-会话分享配置。
-
-```json
-{
-  "share": "manual"
-}
-```
-
-| 值 | 说明 |
-|----|------|
-| `manual` | 手动分享（默认） |
-| `auto` | 自动分享新会话 |
-| `disabled` | 禁用分享 |
-
----
-
-### formatter
-
-格式化器配置。**注意是单数形式**。
-
-```json
-{
-  "formatter": {
-    "prettier": {
-      "disabled": true
-    },
-    "custom-formatter": {
-      "command": ["npx", "prettier", "--write", "$FILE"],
-      "environment": {
-        "NODE_ENV": "development"
-      },
-      "extensions": [".js", ".ts", ".jsx", ".tsx"]
-    }
-  }
-}
-```
-
-设置 `"formatter": false` 禁用所有格式化器。
-
----
-
-### lsp
-
-LSP 服务器配置。
-
-```json
-{
-  "lsp": {
-    "typescript": {
-      "disabled": true
-    },
-    "custom-lsp": {
-      "command": ["custom-lsp-server", "--stdio"],
-      "extensions": [".custom"],
-      "env": {},
-      "initialization": {}
-    }
-  }
-}
-```
-
-设置 `"lsp": false` 禁用所有 LSP 服务器。
-
----
-
-### mcp
-
-MCP 服务器配置。**注意结构：直接在 `mcp` 下定义服务器**。
-
-> 来源：[config.ts](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/config/config.ts)
-
-```json
-{
-  "mcp": {
-    "context7": {
-      "type": "local",
-      "command": ["npx", "-y", "@context7/mcp-server"],
-      "enabled": true,
-      "timeout": 10000
-    },
-    "filesystem": {
-      "type": "local",
-      "command": ["npx", "-y", "@anthropic/mcp-server-filesystem"],
-      "environment": {
-        "ALLOWED_DIRS": "/home/user/projects"
-      }
-    },
-    "remote-server": {
-      "type": "remote",
-      "url": "https://mcp.example.com",
-      "headers": {
-        "Authorization": "Bearer xxx"
-      },
-      "oauth": {
-        "clientId": "xxx",
-        "scope": "read write"
-      },
-      "timeout": 5000
-    }
-  }
-}
-```
-
-#### 本地 MCP 服务器
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `type` | `"local"` | 本地服务器类型 |
-| `command` | string[] | 启动命令（数组形式） |
-| `environment` | object | 环境变量 |
-| `enabled` | boolean | 是否在启动时启用（可选） |
-| `timeout` | number | 获取工具的超时时间（毫秒），默认 5000 |
+| `description` | string | Agent 的简短描述，显示在 `/agent` 列表中。 |
+| `mode` | enum | Agent 类型。`"primary"`(独立模式), `"subagent"`(子代理), `"all"`。 |
+| `model` | string | 该 Agent 专用的模型 ID。 |
+| `prompt` | string | System Prompt (人设指令)。 |
+| `temperature` | number | 温度系数 (0.0 - 1.0)。 |
+| `top_p` | number | 核采样参数 (0.0 - 1.0)。 |
+| `steps` | number | 最大自动迭代步数。 |
+| `color` | string | 在界面中显示的颜色 (Hex 格式，如 `#FF0000`)。 |
+| `hidden` | boolean | 是否在 `@` 自动补全菜单中隐藏此 Agent。 |
+| `permission` | object | 该 Agent 的专用权限配置 (覆盖全局权限)。 |
+| `disable` | boolean | 是否禁用此 Agent。 |
 
-#### 远程 MCP 服务器
+---
+
+## 权限配置 (permission)
+
+控制 OpenCode 访问系统资源的权限。
+
+**键名**：`permission` (单数)  
+**类型**：`Record<string, Rule | Action>`
+
+值可以是以下字符串之一（Action）：
+- `"allow"`: 自动允许
+- `"ask"`: 每次询问
+- `"deny"`: 拒绝
+
+也可以是对象（Rule）进行更细粒度控制。
+
+```json
+"permission": {
+  "edit": "ask",
+  "bash": {
+    "*": "ask",
+    "git *": "allow",
+    "rm *": "deny"
+  }
+}
+```
+
+**可用权限项**：
+- `read`: 读取文件
+- `edit`: 编辑/写入文件
+- `bash`: 执行命令
+- `webfetch`: 访问网页
+- `websearch`: 搜索引擎
+- `codesearch`: 代码搜索
+- `glob`: 文件查找
+- `grep`: 内容搜索
+- `list`: 列出目录
+- `external_directory`: 访问外部目录
+- `lsp`: LSP 操作
+- `task`: 调用子 Agent
+
+---
+
+## 命令配置 (command)
+
+定义自定义斜杠命令。
+
+**键名**：`command` (单数)  
+**类型**：`Record<string, CommandConfig>`
+
+```json
+"command": {
+  "commit": {
+    "template": "Generate a commit message for these changes:\n$DIFF",
+    "agent": "build"
+  }
+}
+```
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `type` | `"remote"` | 远程服务器类型 |
-| `url` | string | 服务器 URL |
-| `headers` | object | 自定义请求头（可选） |
-| `oauth` | object/false | OAuth 配置，设为 false 禁用自动检测 |
-| `enabled` | boolean | 是否在启动时启用（可选） |
-| `timeout` | number | 获取工具的超时时间（毫秒），默认 5000 |
+| `template` | string | 提示词模板。支持 `$ARGUMENTS` 等变量。 |
+| `description` | string | 命令描述。 |
+| `agent` | string | 执行此命令的 Agent。 |
+| `model` | string | 执行此命令的模型。 |
+| `subtask` | boolean | 是否作为子任务运行。 |
 
-#### OAuth 配置
+---
+
+## 快捷键配置 (keybinds)
+
+自定义快捷键。
+
+**键名**：`keybinds` (**复数**)
+
+```json
+"keybinds": {
+  "leader": "ctrl+x",
+  "session_new": "<leader>n"
+}
+```
+
+常用配置项（完整列表见[快捷键速查](./keybinds.md)）：
+
+- `leader`: 前缀键（默认 `ctrl+x`）
+- `app_exit`: 退出应用
+- `session_new`: 新建会话
+- `session_list`: 会话列表
+- `model_list`: 切换模型
+- `agent_list`: 切换 Agent
+- `input_submit`: 发送消息
+- `input_newline`: 换行
+
+---
+
+## 服务器配置 (server)
+
+配置 `opencode serve` 或 `opencode web` 的行为。
+
+```json
+"server": {
+  "port": 4096,
+  "hostname": "0.0.0.0",
+  "mdns": true
+}
+```
+
+| 字段 | 类型 | 说明 | 默认值 |
+|------|------|------|--------|
+| `port` | number | 监听端口。 | 4096 |
+| `hostname` | string | 监听地址。启用 mdns 时默认为 `0.0.0.0`。 | 127.0.0.1 |
+| `mdns` | boolean | 是否启用 mDNS 本地网络发现。 | false |
+| `cors` | string[] | 允许跨域请求的来源列表。 | - |
+
+---
+
+## 实验性功能 (experimental)
+
+启用正在开发中的实验性功能。**注意：这些功能不稳定，可能随时变更**。
+
+```json
+"experimental": {
+  "batch_tool": true,
+  "openTelemetry": true
+}
+```
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `clientId` | string | OAuth 客户端 ID（可选，不提供则尝试动态注册） |
-| `clientSecret` | string | OAuth 客户端密钥（可选） |
-| `scope` | string | 请求的 OAuth 范围（可选） |
+| `batch_tool` | boolean | 启用批量操作工具。 |
+| `openTelemetry` | boolean | 启用 OpenTelemetry 链路追踪。 |
+| `chatMaxRetries` | number | 对话请求失败时的最大重试次数。 |
+| `disable_paste_summary` | boolean | 禁用粘贴大段文本时的自动摘要。 |
+| `continue_loop_on_deny` | boolean | 当工具调用被用户拒绝时，是否让 Agent 继续思考（而不是中断）。 |
+| `primary_tools` | string[] | 指定仅限 Primary Agent 使用的工具列表。 |
+| `mcp_timeout` | number | MCP 请求的全局超时时间（毫秒）。 |
+| `hook` | object | 事件钩子配置。 |
 
-详见 [MCP 配置](../5-advanced/07a-mcp-basics)。
-
----
-
-### plugin
-
-插件配置。
-
-```json
-{
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
-}
-```
-
-详见 [插件开发](../5-advanced/12a-plugins-basics)。
-
----
-
-### instructions
-
-自定义指令文件。
+### Hook 配置
 
 ```json
-{
-  "instructions": ["CONTRIBUTING.md", "docs/guidelines.md", ".cursor/rules/*.md"]
-}
-```
-
-支持 glob 模式。
-
----
-
-### keybinds
-
-快捷键配置。
-
-```json
-{
-  "keybinds": {
-    "leader": "ctrl+x",
-    "switch_agent": "tab",
-    "new_session": "ctrl+n"
-  }
-}
-```
-
-详见 [快捷键配置](./keybinds.md)。
-
----
-
-### compaction
-
-上下文压缩配置。
-
-```json
-{
-  "compaction": {
-    "auto": true,
-    "prune": true
-  }
-}
-```
-
-| 字段 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `auto` | boolean | `true` | 上下文满时自动压缩 |
-| `prune` | boolean | `true` | 移除旧工具输出以节省 token |
-
----
-
-### watcher
-
-文件监视配置。
-
-```json
-{
-  "watcher": {
-    "ignore": ["node_modules/**", "dist/**", ".git/**"]
+"experimental": {
+  "hook": {
+    "file_edited": {
+      "*.ts": [{ "command": ["prettier", "--write", "$FILE"] }]
+    },
+    "session_completed": [{ "command": ["notify-send", "Done"] }]
   }
 }
 ```
 
 ---
 
-### autoupdate
+## 其他配置
 
-自动更新配置。
+### compaction (压缩)
+控制上下文压缩行为。
 
 ```json
-{
-  "autoupdate": true
+"compaction": {
+  "auto": true,
+  "prune": true
 }
 ```
+- `auto`: 上下文满时自动触发压缩。
+- `prune`: 压缩时移除旧的工具输出。
 
-| 值 | 说明 |
-|----|------|
-| `true` | 自动下载更新 |
-| `false` | 禁用自动更新 |
-| `"notify"` | 仅通知有新版本 |
+### watcher (监视器)
+控制文件系统监视。
+
+```json
+"watcher": {
+  "ignore": ["node_modules/**", ".git/**"]
+}
+```
+- `ignore`: 忽略监视的文件 glob 模式列表。
+
+### instructions (指令)
+```json
+"instructions": ["docs/rules.md", ".cursor/rules/*.md"]
+```
+指定额外的全局指令文件列表。
+
+### plugin (插件)
+```json
+"plugin": ["opencode-helicone-session", "./my-plugin.js"]
+```
+要加载的插件列表。支持 npm 包名或本地文件路径。
+
+### mcp (扩展协议)
+配置 Model Context Protocol 服务器。详见 [MCP 文档](../5-advanced/07a-mcp-basics)。
+
+### formatter (格式化)
+配置代码格式化工具。详见 [格式化器文档](../5-advanced/18-formatters)。
+
+### lsp (语言服务)
+配置 LSP 服务器。详见 [LSP 文档](../5-advanced/19-lsp)。
+
+### enterprise (企业版)
+```json
+"enterprise": {
+  "url": "https://github.example.com"
+}
+```
+配置 GitHub Enterprise 实例地址。
 
 ---
 
-### disabled_providers / enabled_providers
+## 附录：源码参考
 
-提供商启用/禁用。
+<details>
+<summary><strong>点击展开查看源码位置</strong></summary>
 
-```json
-{
-  "disabled_providers": ["openai", "gemini"],
-  "enabled_providers": ["anthropic", "opencode"]
-}
-```
+> 更新时间：2025-01-20
 
-`disabled_providers` 优先级高于 `enabled_providers`。
+所有配置 Schema 定义均在 `packages/opencode/src/config/config.ts` 文件中。
 
----
+| 配置项 | 对应 Schema | 行号范围 |
+|--------|------------|----------|
+| 顶层 Info | `Info` | L867-L1078 |
+| Provider | `Provider` | L814-L865 |
+| Agent | `Agent` | L550-L630 |
+| Permission | `Permission` | L509-L539 |
+| Keybinds | `Keybinds` | L632-L781 |
+| TUI | `TUI` | L783-L795 |
+| Server | `Server` | L797-L807 |
+| Command | `Command` | L541-L548 |
+| MCP | `Mcp` | L407-L472 |
+| Experimental | `experimental` | L1029-L1071 |
 
-### experimental
-
-实验性配置。
-
-```json
-{
-  "experimental": {}
-}
-```
-
-> 实验性选项不稳定，可能随时变更或移除。
-
----
-
-## 变量替换
-
-### 环境变量
-
-使用 `{env:VARIABLE_NAME}` 替换环境变量：
-
-```json
-{
-  "model": "{env:OPENCODE_MODEL}",
-  "provider": {
-    "anthropic": {
-      "options": {
-        "apiKey": "{env:ANTHROPIC_API_KEY}"
-      }
-    }
-  }
-}
-```
-
-### 文件内容
-
-使用 `{file:path/to/file}` 替换文件内容：
-
-```json
-{
-  "provider": {
-    "openai": {
-      "options": {
-        "apiKey": "{file:~/.secrets/openai-key}"
-      }
-    }
-  }
-}
-```
-
-文件路径可以是相对路径（相对于配置文件）或绝对路径（以 `/` 或 `~` 开头）。
-
----
-
-## 相关资源
-
-- [CLI 命令参考](./cli.md) - 命令行选项
-- [模型提供商列表](./providers.md) - 可用提供商
-- [配置全解](../5-advanced/01a-config-basics) - 详细教程
+</details>

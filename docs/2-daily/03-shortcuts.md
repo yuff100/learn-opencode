@@ -122,7 +122,7 @@ Leader 键类似于 Vim 的 `<Leader>` 或游戏里的"组合键"。它不是一
 | <kbd>Enter</kbd> | 发送消息 | 回车发送 |
 | <kbd>Shift</kbd>+<kbd>Enter</kbd> | **换行（不发送）** | 写多行提示词时用 |
 | <kbd>Ctrl</kbd>+<kbd>C</kbd> | 清空输入 / 退出 | 输入框有内容时清空，没内容时退出 |
-| <kbd>Escape</kbd> | 中断 AI 响应 | AI 在生成时按，立即停止 |
+| <kbd>Escape</kbd> | 中断 AI 响应 | AI 在生成时按，立即停止。**按两次可强制中断** |
 | <kbd>↑</kbd> / <kbd>↓</kbd> | 翻阅历史输入 | **输入框为空时**，按上下键可找回之前发过的消息 |
 | <kbd>Tab</kbd> | 切换 Agent | 在 Plan/Build/不同 Agent 间切换 |
 | <kbd>Ctrl</kbd>+<kbd>X</kbd> → <kbd>N</kbd> | 新建会话 | Leader 键 + N = **N**ew |
@@ -306,8 +306,10 @@ AI 回复太长或方向错误时及时止损。
 | Shift+Enter 不换行，直接发送 | 终端不发送修饰键 | 改用 <kbd>Ctrl</kbd>+<kbd>J</kbd>，或配置终端 |
 | 按 Ctrl+X 然后按 N 没反应 | 没有松开 Ctrl+X 就按了 N | **必须先松开**，再按 N |
 | 按 Ctrl+X 没反应 | 终端劫持了该按键 | 检查终端设置，或换个终端 |
+| **Ctrl+C 不是复制** | 用来清空输入或退出，不是复制 | 要复制请用 <kbd>Ctrl</kbd>+<kbd>X</kbd> → <kbd>Y</kbd> 或鼠标选中后 <kbd>Ctrl</kbd>+<kbd>V</kbd>
 | 上箭头没有出现历史记录 | 输入框不是空的 | 先清空输入框（Ctrl+C），再按上箭头 |
 | Tab 没有切换 Agent | 在输入状态按的 | 先按 Escape 退出输入，再按 Tab |
+| **Ctrl+Z 意外挂起** | 以为是撤销，实际是挂起终端 | OpenCode 会暂停，需在终端输入 `fg` 恢复。不要用来"撤销"！ |
 
 ---
 
@@ -315,11 +317,12 @@ AI 回复太长或方向错误时及时止损。
 
 ```
 回车发送，Shift 换行
-上箭头翻历史，Ctrl+C 清输入
+上箭头翻历史，Ctrl+C 清输入（不是复制！）
 新建 N，列表 L，模型 M 要牢记
 撤销 U，重做 R，复制 Y 不费力
 Escape 中断响应快
 Tab 切 Agent 真方便
+Ctrl+Z 会挂起，别当撤销用
 ```
 
 ---
